@@ -3,18 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:food_app/utility/colors.dart';
 import 'package:food_app/widgets/text_widgets.dart';
 
-int _current = 0;
-List<String> imagesList = [
-  "onboarding1.png",
-  "onboarding2.png",
-  "onboarding3.png",
-];
-final List<String> titleList = [
-  "Order from your favourite stores or vendors",
-  "Choose from a wide range of  delicious meals",
-  "Enjoy instant delivery and payment",
-];
-
 class OnboardingView extends StatefulWidget {
   const OnboardingView({Key? key}) : super(key: key);
 
@@ -25,6 +13,18 @@ class OnboardingView extends StatefulWidget {
 class _OnboardingViewState extends State<OnboardingView> {
   @override
   Widget build(BuildContext context) {
+    int _current = 0;
+    final List<String> imagesList = [
+      "onboarding1.png",
+      "onboarding2.png",
+      "onboarding3.png",
+    ];
+    final List<String> titleList = [
+      "Order from your favourite stores or vendors",
+      "Choose from a wide range of  delicious meals",
+      "Enjoy instant delivery and payment",
+    ];
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
