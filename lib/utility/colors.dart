@@ -25,6 +25,4 @@ class VColor {
   static const Color shade4 = Color(0xFFFCFCFC);
   static const Color background = Color(0xFFF7F7FB);
 
-
-
 }
