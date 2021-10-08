@@ -15,7 +15,7 @@ class HeaderText extends StatelessWidget {
         fontSize: 24.0,
         fontWeight: FontWeight.w700,
         fontStyle: FontStyle.normal,
-        // fontFamily: 'DM Sans'
+        fontFamily: 'DM Sans'
       ),
       textAlign: alignment,
       maxLines: maxLine,

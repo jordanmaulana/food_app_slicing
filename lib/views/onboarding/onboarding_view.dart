@@ -11,9 +11,10 @@ class OnboardingView extends StatefulWidget {
 }
 
 class _OnboardingViewState extends State<OnboardingView> {
+  int _current = 0;
+
   @override
   Widget build(BuildContext context) {
-    int _current = 0;
     final List<String> imagesList = [
       "onboarding1.png",
       "onboarding2.png",
@@ -29,81 +30,71 @@ class _OnboardingViewState extends State<OnboardingView> {
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 20),
-          height: MediaQuery.of(context).size.height,
           child: Column(
             children: [
               Container(
-                color: VColor.background,
                 margin: const EdgeInsets.symmetric(vertical: 28),
-                width: MediaQuery.of(context).size.width,
                 height: 23.25,
                 child: Image.asset('assets/images/logo.png'),
               ),
-              Container(
-                color: VColor.background,
-                margin: const EdgeInsets.only(top: 20, bottom: 10),
-                width: MediaQuery.of(context).size.width,
-                height: 430,
-                child: CarouselSlider(
-                  items: imagesList
-                      .map(
-                        (item) => Container(
-                          // height: 500,
-                          child: Center(
-                            child: Column(children: [
-                              HeaderText(
-                                '${titleList[imagesList.indexOf(item)]}',
-                                maxLine: 2,
-                                alignment: TextAlign.center,
-                              ),
-                              SizedBox(height: 10.0),
-                              Image.asset(
+              SizedBox(height: 20),
+              CarouselSlider(
+                items: imagesList
+                    .map(
+                      (item) => Container(
+                        child: Center(
+                          child: Column(children: [
+                            HeaderText(
+                              '${titleList[imagesList.indexOf(item)]}',
+                              maxLine: 2,
+                              alignment: TextAlign.center,
+                            ),
+                            SizedBox(height: 20),
+                            Flexible(
+                              child: Image.asset(
                                 "assets/images/onboarding/$item",
-                                fit: BoxFit.cover,
+                                alignment: Alignment.center,
                               ),
-                            ]),
-                          ),
+                            ),
+                          ]),
                         ),
-                      )
-                      .toList(),
-                  options: CarouselOptions(
-                    height: 430,
-                    viewportFraction: 1.0,
-                    enlargeCenterPage: false,
-                    autoPlay: true,
-                    autoPlayInterval: Duration(seconds: 3),
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        _current = index;
-                      });
-                    },
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 6, bottom: 16),
-                width: MediaQuery.of(context).size.width,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: imagesList.asMap().entries.map((entry) {
-                    return Container(
-                      width: 8.0,
-                      height: 8.0,
-                      margin: EdgeInsets.all(4.0),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color:
-                            _current == entry.key ? VColor.green : Colors.grey,
                       ),
-                    );
-                  }).toList(),
+                    )
+                    .toList(),
+                options: CarouselOptions(
+                  height: 430,
+                  viewportFraction: 1.0,
+                  enlargeCenterPage: false,
+                  autoPlay: true,
+                  autoPlayInterval: Duration(seconds: 3),
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _current = index;
+                    });
+                  },
                 ),
               ),
+              SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: imagesList.asMap().entries.map((entry) {
+                  return Container(
+                    width: 8.0,
+                    height: 8.0,
+                    margin: EdgeInsets.all(4.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _current == entry.key
+                          ? VColor.green
+                          : Color(0xFFC4C4C4),
+                    ),
+                  );
+                }).toList(),
+              ),
+              SizedBox(height: 45),
               Container(
-                color: VColor.background,
-                margin: const EdgeInsets.only(top: 20, bottom: 10),
-                width: MediaQuery.of(context).size.width,
                 height: 51,
+                width: double.infinity,
                 child: ElevatedButton(
                   child: Text("Create an account"),
                   style: ButtonStyle(
@@ -119,16 +110,15 @@ class _OnboardingViewState extends State<OnboardingView> {
                   },
                 ),
               ),
+              SizedBox(height: 20),
               Container(
-                color: VColor.background,
-                margin: const EdgeInsets.only(top: 10),
-                width: MediaQuery.of(context).size.width,
+                width: double.infinity,
                 height: 51,
                 child: ElevatedButton(
                   child: Text("Login"),
                   style: ButtonStyle(
                     foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.orange),
+                        MaterialStateProperty.all<Color>(VColor.orange1),
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
                     splashFactory: InkSplash.splashFactory,
