@@ -4,87 +4,136 @@ import 'package:food_app/utility/colors.dart';
 import 'package:food_app/widgets/text_widgets.dart';
 
 class OnboardingView extends StatefulWidget {
+  const OnboardingView({Key? key}) : super(key: key);
+
   @override
   _OnboardingViewState createState() => _OnboardingViewState();
 }
 
 class _OnboardingViewState extends State<OnboardingView> {
   int _current = 0;
-  List<String> images = [
-    "onboarding1",
-    "onboarding2",
-    "onboarding3",
-  ];
 
   @override
   Widget build(BuildContext context) {
+    final List<String> imagesList = [
+      "onboarding1.png",
+      "onboarding2.png",
+      "onboarding3.png",
+    ];
+    final List<String> titleList = [
+      "Order from your favourite stores or vendors",
+      "Choose from a wide range of  delicious meals",
+      "Enjoy instant delivery and payment",
+    ];
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16.0),
-        children: [
-          HeaderText(
-            "Order from your favourite stores or vendors",
-            alignment: TextAlign.center,
-          ),
-          SizedBox(height: 46.0),
-          CarouselSlider(
-            options: CarouselOptions(
-              autoPlay: true,
-              autoPlayInterval: Duration(seconds: 3),
-              onPageChanged: (index, reason) {
-                setState(() {
-                  _current = index;
-                });
-              },
-            ),
-            items: images.map((i) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.symmetric(horizontal: 5.0),
-                    child: Image.asset("assets/images/onboarding/$i.png"),
-                  );
-                },
-              );
-            }).toList(),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: images.asMap().entries.map((entry) {
-              return Container(
-                width: 12.0,
-                height: 12.0,
-                margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: _current == entry.key ? VColor.green : Colors.grey,
-                ),
-              );
-            }).toList(),
-          ),
-          SizedBox(height: 16.0),
-          Container(
-            width: double.infinity,
-            height: 51.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24.0),
-              color: Colors.orange,
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              "Create an Account",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
+      body: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 28),
+                height: 23.25,
+                child: Image.asset('assets/images/logo.png'),
               ),
-            ),
+              SizedBox(height: 20),
+              CarouselSlider(
+                items: imagesList
+                    .map(
+                      (item) => Container(
+                        child: Center(
+                          child: Column(children: [
+                            HeaderText(
+                              '${titleList[imagesList.indexOf(item)]}',
+                              maxLine: 2,
+                              alignment: TextAlign.center,
+                            ),
+                            SizedBox(height: 20),
+                            Flexible(
+                              child: Image.asset(
+                                "assets/images/onboarding/$item",
+                                alignment: Alignment.center,
+                              ),
+                            ),
+                          ]),
+                        ),
+                      ),
+                    )
+                    .toList(),
+                options: CarouselOptions(
+                  height: 430,
+                  viewportFraction: 1.0,
+                  enlargeCenterPage: false,
+                  autoPlay: true,
+                  autoPlayInterval: Duration(seconds: 3),
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _current = index;
+                    });
+                  },
+                ),
+              ),
+              SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: imagesList.asMap().entries.map((entry) {
+                  return Container(
+                    width: 8.0,
+                    height: 8.0,
+                    margin: EdgeInsets.all(4.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _current == entry.key
+                          ? VColor.green
+                          : Color(0xFFC4C4C4),
+                    ),
+                  );
+                }).toList(),
+              ),
+              SizedBox(height: 45),
+              Container(
+                height: 51,
+                width: double.infinity,
+                child: ElevatedButton(
+                  child: Text("Create an account"),
+                  style: ButtonStyle(
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(VColor.orange1),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0)))),
+                  onPressed: () {
+                    print("Create an account");
+                  },
+                ),
+              ),
+              SizedBox(height: 20),
+              Container(
+                width: double.infinity,
+                height: 51,
+                child: ElevatedButton(
+                  child: Text("Login"),
+                  style: ButtonStyle(
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(VColor.orange1),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                    splashFactory: InkSplash.splashFactory,
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0))),
+                  ),
+                  onPressed: () {
+                    print("Login");
+                  },
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
